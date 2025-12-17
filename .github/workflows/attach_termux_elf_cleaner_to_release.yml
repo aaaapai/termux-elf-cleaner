@@ -8,8 +8,6 @@ on:
 jobs:
   attach-program:
     runs-on: ubuntu-slim
-    env:
-      GITHUB_TOKEN: ${{ secrets.TERMUXBOT2_TOKEN }}
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
@@ -35,5 +33,7 @@ jobs:
         run: |
           ninja -C build/ test
       - name: Attach termux-elf-cleaner to release
+        env:
+          GH_TOKEN: ${{ secrets.TERMUXBOT2_TOKEN }}
         run: |
           gh release upload ${{ github.event.release.tag_name }} build/termux-elf-cleaner
